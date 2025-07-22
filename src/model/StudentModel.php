@@ -1,20 +1,26 @@
 <?php
 namespace Akol\StudentManagement\Model;
 use Akol\StudentManagement\Core\Crud;
-class StudentModel implements Crud {
+use Akol\StudentManagement\Core\Database;
+class StudentModel extends Database implements Crud {
     public $id;
     public $fullname;
     public $yearlevel;
     public $course;
     public $section;
 
-    public function __construct(){
-        $this->id = "";
-        $this->fullname = "";
-        $this->yealevel= "";
-        $this->course = "";
-        $this->section = "";
-    }
+    public function __construct()
+    {
+{
+        parent:: __construct();
+            $this-> id = "";
+            $this->name = "";
+            $this->yearlevel = " ";
+            $this->course = "";
+            $this->section = "";
+
+}
+        }
 
 
     public function DisplayInfo(){
@@ -31,6 +37,13 @@ class StudentModel implements Crud {
     }
     public function read(){
 
+        try {
+            $sql = "SELECT * FROM students"; 
+            $result = $this->conn->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }catch(\Exception $e){
+            echo $e->getMessage();
+        }
     }
     public function update(){
 
